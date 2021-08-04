@@ -1,9 +1,12 @@
 package com.example.datajpatest.repository;
 
 import com.example.datajpatest.model.Member;
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -14,6 +17,9 @@ class MemberRepositoryIntegrationTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Test
     void createTest1() {
@@ -39,10 +45,15 @@ class MemberRepositoryIntegrationTest {
 
         // when
         final MemberJpaEntity saved = memberRepository.save(entity);
-        final MemberJpaEntity loadedById = memberRepository.findById(saved.getId()).orElseThrow();
+        memberRepository.flush();
+        final String sql = "select ID as id, NAME as name from MEMBER where id = ?";
+        final Member member = jdbcTemplate.queryForObject(sql,
+                (RowMapper<Member>) (rs, rowNum) -> new SimpleMember(rs.getLong("id"),
+                        rs.getString("name")), saved.getId());
 
         // then
-        assertThat(loadedById.getName()).isEqualTo(memberNameParam);
+        assertThat(member).isNotNull();
+        assertThat(member.getName()).isEqualTo(memberNameParam);
     }
 
     @Test
@@ -65,6 +76,17 @@ class MemberRepositoryIntegrationTest {
         given(member.getId()).willReturn(memberId);
         given(member.getName()).willReturn(memberName);
         return MemberJpaEntity.from(member);
+    }
+
+    @Getter
+    private static class SimpleMember implements Member {
+        private final Long id;
+        private final String name;
+
+        public SimpleMember(Long id, String name) {
+            this.id = id;
+            this.name = name;
+        }
     }
 
 }
