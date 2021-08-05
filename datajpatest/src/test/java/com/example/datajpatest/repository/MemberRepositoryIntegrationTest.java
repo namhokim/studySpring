@@ -1,22 +1,25 @@
 package com.example.datajpatest.repository;
 
 import com.example.datajpatest.model.Member;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 @DataJpaTest
-class MemberRepositoryIntegrationTest {
+@RunWith(SpringRunner.class)
+public class MemberRepositoryIntegrationTest {
 
     @Autowired
     private MemberRepository memberRepository;
 
     @Test
-    void createTest1() {
+    public void createTest1() {
         // given
         final Long memberIdParam = 1L;
         final String memberNameParam = "tester 1";
@@ -31,7 +34,7 @@ class MemberRepositoryIntegrationTest {
     }
 
     @Test
-    void createTest2() {
+    public void createTest2() {
         // given
         final Long memberIdParam = 2L;
         final String memberNameParam = "tester 2";
@@ -46,7 +49,7 @@ class MemberRepositoryIntegrationTest {
     }
 
     @Test
-    void createTest3() {
+    public void createTest3() {
         // given
         final Long memberIdParam = 3L;
         final String memberNameParam = "tester 2";

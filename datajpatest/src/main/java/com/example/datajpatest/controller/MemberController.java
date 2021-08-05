@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 public class MemberController {
@@ -26,7 +26,6 @@ public class MemberController {
         MemberJpaEntity entity = MemberJpaEntity.from(request);
         MemberJpaEntity saved = memberRepository.save(entity);
         final Long memberId = saved.getId();
-
         Link link = linkTo(methodOn(MemberController.class).findMember(memberId)).withSelfRel();
         return ResponseEntity.created(URI.create(link.getHref())).build();
     }

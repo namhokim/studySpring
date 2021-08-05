@@ -4,7 +4,11 @@ import com.example.datajpatest.model.Member
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.RowMapper
 import spock.lang.Specification
+
+import java.sql.ResultSet
+import java.sql.SQLException
 
 @DataJpaTest
 class MemberRepositoryIntegrationSpec extends Specification {
@@ -39,9 +43,12 @@ class MemberRepositoryIntegrationSpec extends Specification {
         final MemberJpaEntity saved = memberRepository.save(entity)
         memberRepository.flush()
         final String sql = "select ID as id, NAME as name from MEMBER where id = ?"
-        final Member member = jdbcTemplate.queryForObject(sql,
-                (rs, rowNum) -> new SimpleMember(rs.getLong("id"),
-                rs.getString("name")), saved.getId())
+        final Member member = jdbcTemplate.queryForObject(sql, new RowMapper<Member>() {
+            @Override
+            Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new SimpleMember(rs.getLong("id"), rs.getString("name"))
+            }
+        }, saved.getId())
 
         then:
         member.getName() == memberNameParam
@@ -57,9 +64,12 @@ class MemberRepositoryIntegrationSpec extends Specification {
         final MemberJpaEntity saved = memberRepository.save(entity)
         memberRepository.flush()
         final String sql = "select ID as id, NAME as name from MEMBER where id = ?"
-        final Member member = jdbcTemplate.queryForObject(sql,
-                (rs, rowNum) -> new SimpleMember(rs.getLong("id"),
-                        rs.getString("name")), saved.getId())
+        final Member member = jdbcTemplate.queryForObject(sql, new RowMapper<Member>() {
+            @Override
+            Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new SimpleMember(rs.getLong("id"), rs.getString("name"))
+            }
+        }, saved.getId())
 
         then:
         member.getName() == memberNameParam
