@@ -15,6 +15,7 @@ public class MemberJoinRequest implements Member {
     private Long id;
     @NotBlank
     private String name;
+    @NotNull
     @Length(min = 10, max = 12)
     private String businessNumber;
 
