@@ -63,12 +63,42 @@ class MemberJoinRequestSpec extends Specification {
         testBusinessNumber << ['', '1', '123456789', '1234567890123', '12345678901234']
     }
 
+    def "사업자 등록번호는 문자열을 허용한다."() {
+        given:
+        sut.setBusinessNumber('tablelands')
+
+        when:
+        Set<ConstraintViolation<MemberJoinRequest>> constraintViolations = validator.validate(sut)
+
+        then:
+        noConstraintViolation(constraintViolations)
+    }
+
+    @Unroll
+    def "사업자 등록번호는 #testBusinessNumber.length() 자리의 길이를 허용한다."() {
+        given:
+        sut.setBusinessNumber(testBusinessNumber)
+
+        when:
+        Set<ConstraintViolation<MemberJoinRequest>> constraintViolations = validator.validate(sut)
+
+        then:
+        noConstraintViolation(constraintViolations)
+
+        where:
+        testBusinessNumber = '12345678901'
+    }
+
     static def getNoConstraintValidationMemberJoinRequest() {
         def req = new MemberJoinRequest()
         req.id = 1
         req.name = "테스터"
         req.businessNumber = "1234567890"
         return req
+    }
+
+    static def noConstraintViolation(Set<ConstraintViolation<MemberJoinRequest>> constraintViolations) {
+        constraintViolations.isEmpty()
     }
 
 }
