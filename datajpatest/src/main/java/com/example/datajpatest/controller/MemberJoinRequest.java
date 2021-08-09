@@ -3,6 +3,7 @@ package com.example.datajpatest.controller;
 import com.example.datajpatest.model.Member;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ public class MemberJoinRequest implements Member {
     private Long id;
     @NotBlank
     private String name;
-    @NotNull
+    @Length(min = 10, max = 12)
     private String businessNumber;
 
 }
