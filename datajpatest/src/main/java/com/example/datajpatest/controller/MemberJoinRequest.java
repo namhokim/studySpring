@@ -2,17 +2,19 @@ package com.example.datajpatest.controller;
 
 import com.example.datajpatest.model.Member;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.beans.ConstructorProperties;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
+@Setter
 public class MemberJoinRequest implements Member {
-    private final Long id;
-    private final String name;
+    @NotNull
+    private Long id;
+    @NotBlank
+    private String name;
+    @NotNull
+    private String businessNumber;
 
-    @ConstructorProperties({"id", "name"})
-    public MemberJoinRequest(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }
