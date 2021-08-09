@@ -27,6 +27,21 @@ class MemberJoinRequestSpec extends Specification {
         sut = getNoConstraintValidationMemberJoinRequest()
     }
 
+    @Unroll
+    def "사업자 등록번호가 #testBusinessNumber 를 허용한다."() {
+        given:
+        sut.setBusinessNumber(testBusinessNumber)
+
+        when:
+        Set<ConstraintViolation<MemberJoinRequest>> constraintViolations = validator.validate(sut)
+
+        then:
+        noConstraintViolation(constraintViolations)
+
+        where:
+        testBusinessNumber << ['1448125784', '144-81-25784']
+    }
+
     def "사업자 등록번호는 null 을 허용하지 않는다."() {
         given:
         sut.setBusinessNumber(null)
@@ -44,7 +59,7 @@ class MemberJoinRequestSpec extends Specification {
     }
 
     @Unroll
-    def "사업자 등록번호가 #testBusinessNumber.length() 자리이면 길이 제약조건 위반이 발생한다."() {
+    def "사업자 등록번호는 #testBusinessNumber.length() 자리를 허용하지 않는다."() {
         given:
         sut.setBusinessNumber(testBusinessNumber)
 
@@ -56,26 +71,15 @@ class MemberJoinRequestSpec extends Specification {
         with(constraintViolations[0]) {
             propertyPath.toString() == 'businessNumber'
             invalidValue.toString() == testBusinessNumber
-            messageTemplate == '{org.hibernate.validator.constraints.Length.message}'
+            message == '10자리의 숫자 또는 대시를 포함한 12자리의 숫자만 입력가능합니다.'
         }
 
         where:
-        testBusinessNumber << ['', '1', '123456789', '1234567890123', '12345678901234']
-    }
-
-    def "사업자 등록번호는 문자열을 허용한다."() {
-        given:
-        sut.setBusinessNumber('tablelands')
-
-        when:
-        Set<ConstraintViolation<MemberJoinRequest>> constraintViolations = validator.validate(sut)
-
-        then:
-        noConstraintViolation(constraintViolations)
+        testBusinessNumber << ['', '1', '123456789', '12345678901', '1234567890123', '12345678901234']
     }
 
     @Unroll
-    def "사업자 등록번호는 #testBusinessNumber.length() 자리의 길이를 허용한다."() {
+    def "사업자 등록번호는 문자열 #testBusinessNumber (#testBusinessNumber.length()) 을 허용하지 않는다."() {
         given:
         sut.setBusinessNumber(testBusinessNumber)
 
@@ -83,11 +87,17 @@ class MemberJoinRequestSpec extends Specification {
         Set<ConstraintViolation<MemberJoinRequest>> constraintViolations = validator.validate(sut)
 
         then:
-        noConstraintViolation(constraintViolations)
+        constraintViolations.size() == 1
+        with(constraintViolations[0]) {
+            propertyPath.toString() == 'businessNumber'
+            invalidValue.toString() == testBusinessNumber
+            message == '10자리의 숫자 또는 대시를 포함한 12자리의 숫자만 입력가능합니다.'
+        }
 
         where:
-        testBusinessNumber = '12345678901'
+        testBusinessNumber << ['apple', 'tablelands']
     }
+
 
     static def getNoConstraintValidationMemberJoinRequest() {
         def req = new MemberJoinRequest()
