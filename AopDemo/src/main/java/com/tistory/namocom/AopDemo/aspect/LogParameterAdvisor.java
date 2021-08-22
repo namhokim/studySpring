@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -23,8 +24,10 @@ public class LogParameterAdvisor {
     public void logParameterBefore(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        LogParameter logParameter = method.getAnnotation(LogParameter.class);
-
+        LogParameter logParameter = AnnotatedElementUtils.findMergedAnnotation(method, LogParameter.class);
+        if (logParameter == null) {
+            return;
+        }
         String parameterName = logParameter.parameterName();
         if (ObjectUtils.isEmpty(parameterName)) {
             return;

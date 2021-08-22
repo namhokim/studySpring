@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Hello {
 
-    @LogParameter(logPrefix = "@RequestParam ", parameterName = "name", printLocation = true)
+//    @LogParameter(logPrefix = "@RequestParam ", parameterName = "name", printLocation = true)
+    @LogParameter("name")
     @LogReturnValue
     @GetMapping("/")
     public String hello(@RequestParam String name) {
