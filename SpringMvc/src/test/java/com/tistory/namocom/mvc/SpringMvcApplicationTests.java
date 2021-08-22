@@ -1,4 +1,4 @@
-package com.tistory.namocom.SpringMvc;
+package com.tistory.namocom.mvc;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
