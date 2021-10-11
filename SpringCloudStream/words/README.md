@@ -1,6 +1,11 @@
 # drinking
 
-* source -> processor -> sink
+* abstract: source -> processor -> sink
+* spring initializr:
+    * Cloud Stream
+    * Spring for Apache Kafka: for bind
+    * Spring Web: for generation end-point by web
+    * Lombok: for convenience
 
 ## local kafka
 
