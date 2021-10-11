@@ -1,0 +1,18 @@
+server:
+  port: 5000
+spring:
+  cloud:
+    function:
+      definition: source
+    stream:
+      kafka:
+        binder:
+          auto-create-topics: true
+      bindings:
+        source-out-0:
+          binder: kafka
+          destination: words-source
+      poller:
+        fixed-delay: 1            # default 1000L ms
+        time-unit: seconds        # default milliseconds
+        max-messages-per-poll: 1  # default 1L

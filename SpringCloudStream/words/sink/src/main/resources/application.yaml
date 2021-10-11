@@ -1,0 +1,12 @@
+server:
+  port: 5001
+spring:
+  cloud:
+    function:
+      definition: wordToConsole
+    stream:
+      bindings:
+        wordToConsole-in-0:
+          binder: kafka
+          destination: words-upper
+          group: words-console-out-group
