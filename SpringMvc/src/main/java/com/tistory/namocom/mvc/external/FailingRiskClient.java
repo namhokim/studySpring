@@ -18,7 +18,7 @@ public class FailingRiskClient {
             e.printStackTrace();
         }
 
-        if (new Random().nextBoolean()) {
+        if (new Random().nextInt() % 3 == 0) {
             throw new IllegalStateException();
         }
 
