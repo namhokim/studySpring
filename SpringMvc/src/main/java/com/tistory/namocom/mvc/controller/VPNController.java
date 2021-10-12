@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VPNController {
 
     @GetMapping(value = "/vpn/{requestNo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public VpnResult getVpn(@PathVariable("requestNo") VpnRequest vpnRequest) {
+    public VpnResult getVpn(VpnRequest vpnRequest) {
         return new VpnResult(vpnRequest);
     }
 

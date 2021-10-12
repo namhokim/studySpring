@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Named;
 import java.util.UUID;
 
-@Named
+//@Named
 @Slf4j
 public class VpnRequestConverter implements Converter<String, VpnRequest> {
 
@@ -22,6 +22,6 @@ public class VpnRequestConverter implements Converter<String, VpnRequest> {
             e.printStackTrace();
         }
         log.info("[{}] Convert completed {} to VpnRequest", uuid, source);
-        return new VpnRequest("namo", source);
+        return new VpnRequest(source);
     }
 }

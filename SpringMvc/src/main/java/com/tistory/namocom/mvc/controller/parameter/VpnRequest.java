@@ -7,8 +7,8 @@ public class VpnRequest {
     private final String requestNo;
     private final String memberNo;
 
-    public VpnRequest(String requestNo, String memberNo) {
+    public VpnRequest(String requestNo) {
         this.requestNo = requestNo;
-        this.memberNo = memberNo;
+        this.memberNo = "nhk";
     }
 }
