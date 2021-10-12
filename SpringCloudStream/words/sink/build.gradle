@@ -7,6 +7,8 @@ plugins {
 dependencies {
     implementation project(':common')
 
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
     implementation "org.springframework.cloud:spring-cloud-stream:${springCloudStreamVersion}"
     implementation "org.springframework.cloud:spring-cloud-stream-binder-kafka:${springCloudStreamVersion}"
     implementation "org.apache.kafka:kafka-streams:${kafkaVersion}"

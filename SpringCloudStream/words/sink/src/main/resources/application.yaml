@@ -1,5 +1,5 @@
 server:
-  port: 5001
+  port: 5002
 spring:
   cloud:
     function:
@@ -10,3 +10,22 @@ spring:
           binder: kafka
           destination: words-upper
           group: words-console-out-group
+          consumer:
+#            retry-template-name: myRetryTemplate
+#            max-attempts: 1  # disable retry
+#            default-retryable: false
+            retryable-exceptions:
+              com.tistory.namocom.words.error.DuplicationWordException: false
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health, info, metrics, bindings
+  health:
+    binders:
+      enabled: true
