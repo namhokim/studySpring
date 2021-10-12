@@ -1,0 +1,19 @@
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}" apply(false)
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply(false)
+	id 'java'
+}
+
+subprojects {
+	group = 'com.tistory.namocom'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+
+	repositories {
+		mavenCentral()
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+}

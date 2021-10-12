@@ -1,0 +1,18 @@
+server:
+  port: 5001
+spring:
+  cloud:
+    function:
+      definition: wordToUpperCase
+    stream:
+      kafka:
+        binder:
+          auto-create-topics: true
+      bindings:
+        wordToUpperCase-in-0:
+          binder: kafka
+          destination: words-source
+          group: words-upper-group
+        wordToUpperCase-out-0:
+          binder: kafka
+          destination: words-upper
