@@ -1,14 +1,14 @@
 package com.tistory.namocom.words;
 
-import com.tistory.namocom.words.error.DuplicationWordException;
 import com.tistory.namocom.words.model.Word;
 import com.tistory.namocom.words.sink.repository.WordRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.annotation.StreamRetryTemplate;
+import org.springframework.cloud.stream.config.ListenerContainerCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.retry.support.RetryTemplate;
-import org.springframework.retry.support.RetryTemplateBuilder;
+import org.springframework.kafka.listener.AbstractMessageListenerContainer;
+import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
+import org.springframework.util.backoff.FixedBackOff;
 
 import java.util.function.Consumer;
 
@@ -27,11 +27,11 @@ public class SinkApplication {
 		};
 	}
 
-//	@StreamRetryTemplate
-//	public RetryTemplate myRetryTemplate() {
-//		final RetryTemplateBuilder builder = RetryTemplate.builder();
-//		builder.notRetryOn(DuplicationWordException.class);
-//		return builder.build();
-//	}
+	@Bean
+	public ListenerContainerCustomizer<AbstractMessageListenerContainer<?, ?>> getErrorHandler() {
+		FixedBackOff backOff = new FixedBackOff(FixedBackOff.DEFAULT_INTERVAL, 0);
+		SeekToCurrentErrorHandler handler = new SeekToCurrentErrorHandler(null, backOff);
+		return (container, dest, grp) -> container.setErrorHandler(handler);
+	}
 
 }

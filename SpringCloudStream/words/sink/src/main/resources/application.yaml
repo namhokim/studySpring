@@ -11,8 +11,8 @@ spring:
           destination: words-upper
           group: words-console-out-group
           consumer:
-#            retry-template-name: myRetryTemplate
-#            max-attempts: 1  # disable retry
+            retry-template-name: myRetryTemplate
+            max-attempts: 1  # disable retry
 #            default-retryable: false
             retryable-exceptions:
               com.tistory.namocom.words.error.DuplicationWordException: false
