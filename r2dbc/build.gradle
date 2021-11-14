@@ -20,9 +20,9 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
-	implementation 'org.springframework.boot:spring-boot-starter-rsocket'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.12'
+	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb:r2dbc-mariadb'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
