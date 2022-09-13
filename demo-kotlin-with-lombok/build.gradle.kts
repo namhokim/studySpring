@@ -4,7 +4,9 @@ plugins {
     id("org.springframework.boot") version "2.7.3"
     id("io.spring.dependency-management") version "1.0.13.RELEASE"
     kotlin("jvm") version "1.6.21"
+    kotlin("kapt") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
+    kotlin("plugin.lombok") version "1.6.21"
 }
 
 group = "com.example"
@@ -40,4 +42,8 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+kapt {
+    keepJavacAnnotationProcessors = true
 }
