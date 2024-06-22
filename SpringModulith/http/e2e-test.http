@@ -1,0 +1,19 @@
+### place order
+# @name 주문 수행
+POST {{host}}/orders
+Content-Type: application/json
+
+{
+  "lineItems": [
+    {
+      "quantity": 2,
+      "product": 1
+    }
+  ]
+}
+
+> {%
+    client.test("Request successfully", function() {
+        client.assert(response.status === 200, "OK");
+    });
+%}
