@@ -1,18 +1,16 @@
 package com.example.service.products
 
 import com.example.service.orders.OrderPlacedEvent
-import org.springframework.context.event.EventListener
+import org.springframework.modulith.events.ApplicationModuleListener
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
-@Transactional
 @Service
 class ProductService {
 
-    @EventListener
+    @ApplicationModuleListener
     fun on(event: OrderPlacedEvent) {
         println("Starting: $event")
-        Thread.sleep(5_000)
+        Thread.sleep(10_000)
         println("Stopping: $event")
     }
 
