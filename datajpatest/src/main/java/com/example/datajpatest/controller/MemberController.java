@@ -7,6 +7,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -22,7 +23,7 @@ public class MemberController {
     }
 
     @PostMapping("/member")
-    public ResponseEntity<Void> joinMember(@RequestBody MemberJoinRequest request) {
+    public ResponseEntity<Void> joinMember(@Valid @RequestBody MemberJoinRequest request) {
         MemberJpaEntity entity = MemberJpaEntity.from(request);
         MemberJpaEntity saved = memberRepository.save(entity);
         final Long memberId = saved.getId();
