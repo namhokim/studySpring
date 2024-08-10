@@ -1,6 +1,6 @@
 package com.example.service.products
 
-import com.example.service.orders.OrderPlacedEvent
+import com.example.service.orders.event.OrderPlacedEvent
 import org.springframework.modulith.events.ApplicationModuleListener
 import org.springframework.stereotype.Service
 

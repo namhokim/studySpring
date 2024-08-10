@@ -1,6 +1,6 @@
 package com.example.service.orders.service
 
-import com.example.service.orders.OrderPlacedEvent
+import com.example.service.orders.event.OrderPlacedEvent
 import com.example.service.orders.model.Order
 import com.example.service.orders.repository.OrderRepository
 import org.springframework.context.ApplicationEventPublisher
