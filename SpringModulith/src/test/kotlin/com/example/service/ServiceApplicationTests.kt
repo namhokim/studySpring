@@ -19,6 +19,7 @@ class ServiceApplicationTests {
 		Documenter(modules)
 			.writeIndividualModulesAsPlantUml()
 			.writeModulesAsPlantUml()
+            .writeModuleCanvases()
 	}
 
 }
