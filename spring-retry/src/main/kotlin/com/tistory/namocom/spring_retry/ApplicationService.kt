@@ -12,8 +12,8 @@ class ApplicationService(
 ) {
     private val counter: AtomicLong = AtomicLong(0)
 
-    @Retryable(maxAttempts = 3, retryFor = [RuntimeException::class], recover = "recover")
     @Transactional
+    @Retryable(maxAttempts = 3, include = [RuntimeException::class], recover = "recover")
     fun run() {
         println("ApplicationService.run() - ${counter.incrementAndGet()}")
         domainService.somethingFail()

@@ -9,7 +9,7 @@ import org.springframework.retry.annotation.EnableRetry
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @EnableRetry	// (order = Ordered.LOWEST_PRECEDENCE + 1)
-//@EnableTransactionManagement(order = Ordered.LOWEST_PRECEDENCE - 2)
+@EnableTransactionManagement(order = Ordered.LOWEST_PRECEDENCE - 2)
 @SpringBootApplication
 class SpringRetryApplication(
 	private val applicationService: ApplicationService,
