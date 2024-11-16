@@ -4,7 +4,7 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.25"
 	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
-	jacoco
+	id("org.jetbrains.kotlinx.kover") version "0.9.0-RC"
 }
 
 group = "com.tistory.namocom"
@@ -38,6 +38,7 @@ dependencies {
 	testImplementation("com.appmattus.fixture:fixture:1.2.0")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testRuntimeOnly("com.h2database:h2")
+	kover(project(":"))
 }
 
 kotlin {
@@ -59,11 +60,4 @@ tasks.withType<Test> {
 
 tasks.test {
 	maxHeapSize = "6400m"
-}
-
-tasks.jacocoTestReport {
-	dependsOn(tasks.named("test"))
-	reports {
-		xml.required.set(true)
-	}
 }
