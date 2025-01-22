@@ -12,7 +12,7 @@ import java.time.Month
 @SpringBootApplication
 @Suppress("SpellCheckingInspection")
 class SpringdatajpaApplication {
-    @Bean
+    // @Bean
     fun configure(userRepository: UserRepository) = ApplicationRunner {
         val user1 = User(username = "beth", registrationDate = LocalDate.of(2020, Month.AUGUST, 3))
         val user2 = User(username = "mike", registrationDate = LocalDate.of(2020, Month.JANUARY, 18))

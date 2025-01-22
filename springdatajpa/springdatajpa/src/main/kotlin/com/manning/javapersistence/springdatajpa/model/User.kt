@@ -14,4 +14,7 @@ data class User(
     val id: Long? = null,
     val username: String,
     val registrationDate: LocalDate,
+    var email: String? = null,
+    var level: Int? = null,
+    var active: Boolean? = null,
 )
