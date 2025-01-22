@@ -4,6 +4,7 @@ import com.manning.javapersistence.springdatajpa.model.User
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.util.Streamable
 import java.time.LocalDate
 
 interface UserRepository : JpaRepository<User, Long> {
@@ -14,4 +15,7 @@ interface UserRepository : JpaRepository<User, Long> {
     // ..
     fun findByLevel(level: Int, user: Sort): List<User>
     fun findByActive(active: Boolean, sort: Pageable): List<User>
+    // ..
+    fun findByEmailContaining(text: String): Streamable<User>
+    fun findByLevel(level: Int): Streamable<User>
 }

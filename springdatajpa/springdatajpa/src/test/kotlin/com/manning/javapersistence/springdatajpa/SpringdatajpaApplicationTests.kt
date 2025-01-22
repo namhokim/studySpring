@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import java.time.LocalDate
+import java.util.stream.Stream
 import kotlin.test.assertEquals
 
 @SpringBootTest
@@ -111,6 +112,16 @@ class SpringdatajpaApplicationTests(
             { assertEquals(1, users.size) },
             { assertEquals("john", users[0].username) },
         )
+    }
+
+    @Test
+    fun testStreamable() {
+        val result: Stream<User> = userRepository.findByEmailContaining("some")
+            .and(userRepository.findByLevel(2))
+            .stream().distinct()
+        result.use {
+            assertEquals(1, it.count())
+        }
     }
 
 }
