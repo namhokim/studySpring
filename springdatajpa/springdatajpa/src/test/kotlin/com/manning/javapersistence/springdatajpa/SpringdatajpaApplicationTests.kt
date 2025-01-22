@@ -5,6 +5,9 @@ import com.manning.javapersistence.springdatajpa.repositories.UserRepository
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import java.time.LocalDate
 import kotlin.test.assertEquals
 
@@ -33,12 +36,12 @@ class SpringdatajpaApplicationTests(
 
         val bart = User(username = "bart", registrationDate = LocalDate.parse("2020-05-13"))
         john.email = "bart@some.com"
-        john.level = 10
-        john.active = true
+        john.level = 2
+        john.active = false
 
         val hazel = User(username = "hazel", registrationDate = LocalDate.parse("2020-10-13"))
         john.email = "hazel@some.com"
-        john.level = 1
+        john.level = 3
         john.active = true
 
         return listOf(john, bart, hazel)
@@ -77,6 +80,36 @@ class SpringdatajpaApplicationTests(
             { assertEquals(2, users.size) },
             { assertEquals("bart", users[0].username) },
             { assertEquals("hazel", users[1].username) }
+        )
+    }
+
+    @Test
+    fun testOrder() {
+        val userPage: Page<User> = userRepository.findAll(PageRequest.of(1, 3))
+        assertAll(
+            { assertEquals(3, userPage.size) },
+        )
+    }
+
+    @Test
+    fun testFindByLevel() {
+        val user: Sort.TypedSort<User> = Sort.sort(User::class.java)
+        val users: List<User> = userRepository.findByLevel(3, user.by(User::registrationDate).descending())
+        assertAll(
+            { assertEquals(1, users.size) },
+            { assertEquals("john", users[0].username) },
+        )
+    }
+
+    @Test
+    fun testFindByActive() {
+        val users: List<User> = userRepository.findByActive(
+            active = true,
+            sort = PageRequest.of(0, 4, Sort.by("registrationDate")),
+        )
+        assertAll(
+            { assertEquals(1, users.size) },
+            { assertEquals("john", users[0].username) },
         )
     }
 
