@@ -24,8 +24,15 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
 	implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
-	// io.github.resilience4j:resilience4j-spring-boot2:1.7.1
+	// spring-cloud-starter-circuitbreaker-resilience4j-3.2.0.jar
+	// - org.springframework.cloud:spring-cloud-starter:4.2.0
+	// - org.springframework.cloud:spring-cloud-circuitbreaker-resilience4j:3.2.0
+	// - io.github.resilience4j:resilience4j-circuitbreaker:2.2.0
+	// - io.github.resilience4j:resilience4j-timelimiter:2.2.0
+	//   - io.github.resilience4j:resilience4j-spring-boot3:2.2.0
+	//     - io.github.resilience4j:resilience4j-spring6:2.2.0
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
