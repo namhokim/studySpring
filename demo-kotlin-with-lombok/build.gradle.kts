@@ -5,6 +5,8 @@ plugins {
     id("io.spring.dependency-management") version "1.0.13.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
+    kotlin("plugin.lombok") version "1.6.21"
+    id("io.freefair.lombok") version "6.5.1"
 }
 
 group = "com.example"
@@ -40,4 +42,8 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+kotlinLombok {
+    lombokConfigurationFile(file("lombok.config"))
 }
