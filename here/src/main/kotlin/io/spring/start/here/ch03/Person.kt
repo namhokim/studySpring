@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class Person {
+data class Person @Autowired constructor(
+     var parrot: Parrot,
+) {
     var name: String = "Ella"
-
-    @Autowired
-    var parrot: Parrot? = null
 }
