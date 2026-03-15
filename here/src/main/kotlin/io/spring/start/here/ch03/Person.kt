@@ -1,6 +1,12 @@
 package io.spring.start.here.ch03
 
-data class Person(
-    val name: String,
-    var parrot: Parrot? = null,
-)
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
+
+@Component
+class Person {
+    var name: String = "Ella"
+
+    @Autowired
+    var parrot: Parrot? = null
+}

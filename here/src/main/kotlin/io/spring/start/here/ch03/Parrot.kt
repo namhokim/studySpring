@@ -1,12 +1,11 @@
 package io.spring.start.here.ch03
 
-data class Parrot(
-    val name: String = "Unknown",
-) {
-    init {
-        println("Parrot created with name: $name")
-    }
+import org.springframework.stereotype.Component
 
+@Component
+data class Parrot(
+    val name: String = "Koko",
+) {
     override fun toString(): String {
         return "Parrot: $name"
     }
