@@ -1,14 +1,13 @@
 package com.tistory.findnamo.boot3.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tistory.findnamo.boot3.controller.TestEntity
 import org.springframework.boot.autoconfigure.cache.CacheProperties
 import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheConfiguration
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 
 @Configuration(proxyBeanMethods = false)
@@ -20,10 +19,15 @@ class CacheConfiguration(
     @Bean
     fun redisCacheConfiguration(): RedisCacheConfiguration {
         val redisProperties: Redis = cacheProperties.redis
+        val redisObjectMapper: ObjectMapper = objectMapper.copy()
+
         val config: RedisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(
-                    Jackson2JsonRedisSerializer(objectMapper, TestEntity::class.java)
+                    GenericJackson2JsonRedisSerializer.builder()
+                        .objectMapper(redisObjectMapper)
+                        .defaultTyping(true)
+                        .build()
                 )
             )
             .applyIfNotNull(redisProperties.timeToLive) { entryTtl(redisProperties.timeToLive) }
